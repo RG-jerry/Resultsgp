@@ -431,5 +431,37 @@ function resetAll(){
 })();
 </script>
 
+  <script>
+(function () {
+  document.addEventListener('contextmenu', e => e.preventDefault(), { capture: true });
+
+  function block(e){
+    const key = (e.key || '').toLowerCase();
+    const code = e.code || '';
+
+    const ctrlOrCmd = e.ctrlKey || e.metaKey;
+    const shift = e.shiftKey;
+
+    const isDevtools =
+      e.key === 'F12' ||
+      (ctrlOrCmd && shift && (key === 'i' || key === 'j' || key === 'c')) ||
+      (ctrlOrCmd && (key === 'u' || code === 'KeyU'));
+
+    if (isDevtools) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      return false;
+    }
+  }
+
+  ['keydown','keypress','keyup'].forEach(type => {
+    window.addEventListener(type, block, { capture: true });
+    document.addEventListener(type, block, { capture: true });
+  });
+})();
+</script>
+  
 </body>
 </html>
+
