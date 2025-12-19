@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SGP TOTO CONVERTER</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
 
 <style>
 :root{
-  --brand-font: 'Montserrat', Arial, Helvetica, sans-serif;
+  --brand-font:'Times New Roman', Times, serif;
 
   /* Responsive sizing */
   --card-w: min(92vw, 420px);
@@ -24,14 +24,14 @@
   --input-radius: clamp(10px, 2.5vw, 12px);
   --input-font: clamp(14px, 3.8vw, 16px);
 
-  --title-font: clamp(12px, 3.4vw, 14px);
+  --title-font: clamp(16px, 4.5vw, 18px);
   --brand-font-size: clamp(22px, 6.5vw, 29px);
 
   --result-w: clamp(170px, 52vw, 200px);
   --result-font: clamp(30px, 9vw, 38px);
   --result-letter: clamp(4px, 1.8vw, 6px);
 
-  --btn-font: clamp(14px, 4vw, 16px);
+  --btn-font: clamp(18px, 4.5vw, 20px);
   --btn-pad: clamp(12px, 3.5vw, 14px);
 }
 
@@ -42,7 +42,7 @@ body{
   min-height:100svh;
   display:grid;
   place-items:center;
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:'Times New Roman', Times, serif,Helvetica,sans-serif;
   padding:16px;
 
   /* tetap ada warna dasar (kalau gambar gagal load) */
@@ -163,7 +163,7 @@ input.num:focus{
 }
 
 .resultTitle{
-  margin-top:40px;
+  margin-top:35px;
   margin-bottom:6px;
   text-align:center;
   font-size:var(--title-font);
@@ -185,7 +185,7 @@ input.num:focus{
 
 .btn{
   width:100%;
-  margin-top:14px;
+  margin-top:25px;
   padding:var(--btn-pad) 0;
   border-radius:12px;
   border:2px solid #b88412;
@@ -193,6 +193,9 @@ input.num:focus{
   color:#111;
   font-weight:900;
   font-size:var(--btn-font);
+  font-family:'Times New Roman', Times, serif;
+  letter-spacing:2px;
+  text-shadow:0 1px 0 #fff;
   cursor:pointer;
   touch-action:manipulation;
 }
@@ -205,7 +208,9 @@ input.num:focus{
   background:linear-gradient(180deg,#e0e0e0 0%,#bdbdbd 100%);
   color:#111;
   font-weight:900;
-  font-size:clamp(13px, 3.6vw, 14px);
+  font-size:clamp(16px, 4.5vw, 18px);
+  font-family:'Times New Roman', Times, serif;
+  letter-spacing:1.5px;
   cursor:pointer;
   touch-action:manipulation;
 }
@@ -431,7 +436,7 @@ function resetAll(){
 })();
 </script>
 
-  <script>
+<script>
 (function () {
   document.addEventListener('contextmenu', e => e.preventDefault(), { capture: true });
 
@@ -461,7 +466,6 @@ function resetAll(){
   });
 })();
 </script>
-  
+
 </body>
 </html>
-
