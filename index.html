@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>RG Result</title>
+<title>SGP TOTO CONVERTER</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
 
@@ -43,8 +43,16 @@ body{
   display:grid;
   place-items:center;
   font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(180deg,#FFD84D 0%,#FFC107 50%,#FFB300 100%);
-  padding: 16px;
+  padding:16px;
+
+  /* tetap ada warna dasar (kalau gambar gagal load) */
+  background-color:#FFC107;
+
+  /* gambar natal di belakang, overlay tipis biar card tetap jelas */
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,.18), transparent 45%),
+    linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.18)),
+    url("https://png.pngtree.com/thumb_back/fh260/background/20241113/pngtree-festive-christmas-theme-with-golden-stars-and-free-space-for-holiday-image_16575696.jpg") center/cover no-repeat fixed;
 }
 
 .card{
@@ -121,8 +129,8 @@ body{
 
 /* khusus jarak untuk Additional Number */
 .title-additional{
-  margin-top:18px;     /* jarak dari baris Winning Numbers */
-  margin-bottom:10px;  /* jarak ke kotak Additional */
+  margin-top:30px;     /* jarak dari baris Winning Numbers */
+  margin-bottom:6px;  /* jarak ke kotak Additional */
 }
 
 .row{
@@ -155,7 +163,7 @@ input.num:focus{
 }
 
 .resultTitle{
-  margin-top:18px;
+  margin-top:40px;
   margin-bottom:6px;
   text-align:center;
   font-size:var(--title-font);
@@ -214,10 +222,47 @@ input.num:focus{
 @media (max-width: 340px){
   .row{ flex-wrap:wrap; }
 }
+
+/* ❄️ Snow layer */
+.snow-wrap{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;            /* di atas background */
+  overflow:hidden;
+}
+
+.snow-dot{
+  position:absolute;
+  top:-10vh;
+  border-radius:50%;
+  background: rgba(255,255,255,.95);
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.15));
+  will-change: transform;
+  animation-name: snow-fall, snow-sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+
+/* jatuh ke bawah */
+@keyframes snow-fall{
+  to { transform: translateY(120vh); }
+}
+
+/* goyang kiri-kanan */
+@keyframes snow-sway{
+  0%   { margin-left: 0px; }
+  25%  { margin-left: -18px; }
+  50%  { margin-left: 18px; }
+  75%  { margin-left: -10px; }
+  100% { margin-left: 0px; }
+}
 </style>
 </head>
 
 <body>
+  <div class="snow-wrap" id="snow"></div>
+  
 <div class="card">
   <div class="logo">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGFjdwbWoq1Y0nvMYuIVMKuo8K4mkQkK6bew&s" alt="Logo">
@@ -245,8 +290,21 @@ input.num:focus{
   <div class="err" id="err"></div>
 
   <button class="btn" onclick="hitung()">HITUNG</button>
-  <button class="btn-reset" onclick="resetAll()">RESET</button>
+  <button class="btn-reset" onclick="resetAll()">CLEAR</button>
 </div>
+
+<audio id="music" autoplay muted loop preload="auto">
+  <source src="https://olx.recamweek.com/OLXTOTO/We%20Wish%20You%20A%20Merry%20Christmas%20-%20AndrisMusic%20(youtube).mp3" type="audio/mpeg">
+</audio>
+
+<script>
+document.addEventListener("pointerdown", () => {
+  const music = document.getElementById("music");
+  music.muted = false;
+  music.volume = 0.5;
+  music.play().catch(()=>{});
+}, { once:true });
+</script>
 
 <script>
 const boxes = Array.from(document.querySelectorAll('.codebox'));
@@ -337,6 +395,40 @@ function resetAll(){
   document.getElementById('err').textContent = '';
   document.getElementById('A2').focus();
 }
+</script>
+
+<script>
+(function makeSnow(){
+  const wrap = document.getElementById('snow');
+  const COUNT = 55; // banyaknya salju (naikkan kalau mau lebih ramai)
+
+  function rand(min, max){ return Math.random()*(max-min)+min; }
+
+  for(let i=0; i<COUNT; i++){
+    const dot = document.createElement('div');
+    dot.className = 'snow-dot';
+
+    const size = rand(3.5, 7.8);                 // ukuran salju (px)
+    const left = rand(0, 100);                   // posisi kiri (%)
+    const fallDur = rand(6, 12);                 // durasi jatuh (s)
+    const delay = rand(0, 5);                    // delay start (s)
+    const swayDur = rand(3.5, 6.5);              // durasi goyang (s)
+    const opacity = rand(0.35, 0.9);             // transparansi
+    const blur = rand(0, 0.7);                   // blur tipis
+
+    dot.style.width = size + 'px';
+    dot.style.height = size + 'px';
+    dot.style.left = left + 'vw';
+    dot.style.opacity = opacity;
+    dot.style.filter = `blur(${blur}px) drop-shadow(0 1px 2px rgba(0,0,0,.12))`;
+
+    // animasi: fall + sway (masing-masing durasi & delay)
+    dot.style.animationDuration = `${fallDur}s, ${swayDur}s`;
+    dot.style.animationDelay = `${delay}s, ${rand(0, 2)}s`;
+
+    wrap.appendChild(dot);
+  }
+})();
 </script>
 
 </body>
